@@ -1,35 +1,35 @@
 # 🎮 Proyecto Final - Juego del Ahorcado
 
-**Curso:** Programación Avanzada
-**Código:** SC-601
-**Profesor:** Luis Andrés Rojas Matey
-**Grupo:** Eduardo Castro, Brandon Cespedes, Jimena Flores, Mariana Hidalgo
+**Curso:** Programación Avanzada  
+**Código:** SC-601  
+**Profesor:** Luis Andrés Rojas Matey  
+**Grupo:** Eduardo Castro, Brandon Céspedes, Jimena Flores, Mariana Hidalgo
 
 ---
 
 ## 🧠 Descripción
 
-Este es un proyecto web desarrollado en ASP.NET MVC 5 (Framework 4.8.1) que simula el juego del Ahorcado. Incluye:
+Este es un proyecto web desarrollado en **ASP.NET MVC 5** (Framework 4.8.1) que simula el juego clásico del Ahorcado. Incluye:
 
-* Módulo de administración de palabras.
-* Registro de jugadores.
-* Creación de partidas con niveles de dificultad.
-* Lógica del juego y validación de letras.
-* Escalafón de jugadores según su desempeño.
-
----
-
-## 🛠 Tecnologías usadas
-
-* ASP.NET MVC 5 (.NET Framework 4.8.1)
-* C#
-* Entity Framework Model First
-* SQL Server (localdb o Azure opcional)
-* Bootstrap 5
+- Módulo para gestión de palabras del diccionario.
+- Registro de jugadores con sistema de puntuación.
+- Creación de partidas con tres niveles de dificultad.
+- Lógica de juego con validación de letras y condiciones de victoria/derrota.
+- Escalafón con clasificación según rendimiento.
 
 ---
 
-## 📁 Estructura del proyecto
+## 🛠 Tecnologías Utilizadas
+
+- ASP.NET MVC 5 (.NET Framework 4.8.1)
+- C#
+- Entity Framework (Model First)
+- SQL Server (LocalDB o Azure opcional)
+- Bootstrap 5
+
+---
+
+## 📁 Estructura del Proyecto
 
 ```
 Ahorcado/
@@ -38,7 +38,7 @@ Ahorcado/
 │   ├── PalabrasController.cs
 │   └── PartidasController.cs
 ├── Models/
-│   ├── Model1.edmx (Entity Framework Model)
+│   ├── Model1.edmx
 │   └── EscalafonViewModel.cs
 ├── Views/
 │   ├── Jugadores/
@@ -46,32 +46,83 @@ Ahorcado/
 │   ├── Partidas/
 │   │   └── Escalafon.cshtml
 │   └── Shared/_Layout.cshtml
-├── Content/ (Bootstrap, CSS)
-├── Scripts/ (jQuery, validación)
+├── Content/
+├── Scripts/
 └── README.md
 ```
 
 ---
 
-## 🧩 Instrucciones de ejecución
+## 📦 Instrucciones de Ejecución
 
-### 1. Requisitos
+### ✅ Requisitos
 
-* Visual Studio 2022
-* SQL Server Express o LocalDB
-* .NET Framework 4.8.1
+- Visual Studio 2022
+- SQL Server Express o LocalDB
+- .NET Framework 4.8.1
 
-### 2. Restaurar base de datos
+### 🛠 Restaurar Base de Datos
 
-**Opcion 1:** Ejecutar `AhorcadoDB.sql` en SQL Server Management Studio:
+**Opción 1:** Ejecutar el script `AhorcadoDB.sql`
 
-1. Crear una base vacía llamada `AhorcadoDB`
-2. Ejecutar el script completo.
+1. Crear una base de datos vacía llamada `AhorcadoDB`.
+2. Ejecutar el script SQL incluido (`AhorcadoDB.sql`).
 
+**Opción 2:** Restaurar desde archivo `.bak`
+
+1. Usar SQL Server Management Studio (SSMS).
+2. Restaurar la base desde el archivo `.bak`.
+
+### ▶ Ejecutar el Proyecto
+
+1. Abrir `Ahorcado.sln` en Visual Studio.
+2. Confirmar que la cadena de conexión en `Web.config` apunta a la base `AhorcadoDB`.
+3. Ejecutar el proyecto (`Ctrl + F5`).
+
+---
+
+## 🧠 Lógica del Juego
+
+- Se escoge una palabra aleatoria no utilizada.
+- Se muestran guiones bajos (`_`) representando las letras.
+- El jugador selecciona letras por botones tipo teclado.
+- El juego termina si:
+  - Se adivina la palabra completa.
+  - Se agotan los 5 intentos fallidos.
+  - Se termina el tiempo según el nivel:
+
+| Nivel   | Tiempo     |
+|---------|------------|
+| Fácil   | 90 segundos |
+| Normal  | 60 segundos |
+| Difícil | 30 segundos |
+
+---
+
+## 📊 Escalafón de Jugadores
+
+- Puntos por victoria:
+  - Fácil: +1
+  - Normal: +2
+  - Difícil: +3
+- Puntos por derrota:
+  - Fácil: -1
+  - Normal: -2
+  - Difícil: -3
+- Se muestra un ranking con:
+
+| Identificación | Nombre | Marcador | Ganadas | Perdidas |
+|----------------|--------|----------|---------|----------|
+
+---
+
+## 🧬 Diagrama de Base de Datos (Mermaid)
+
+```mermaid
 erDiagram
-    JUGADOR ||--o{ PARTIDA : tiene
-    PALABRA ||--o{ PARTIDA : se_usa_en
-    PARTIDA ||--o{ INTENTO : genera
+    JUGADOR ||--o{ PARTIDA : "juega"
+    PALABRA ||--o{ PARTIDA : "usa"
+    PARTIDA ||--o{ INTENTO : "tiene"
 
     JUGADOR {
         int Identificacion PK
@@ -81,7 +132,7 @@ erDiagram
     PALABRA {
         int PalabraID PK
         nvarchar Texto
-        nvarchar TextoNormalizado (GENERATED)
+        nvarchar TextoNormalizado
         bit TieneTilde
         bit Usada
     }
@@ -111,62 +162,30 @@ erDiagram
         int Ganadas
         int Perdidas
     }
-
-
-**Opcion 2:** Adjuntar el archivo `.bak` desde SSMS
-
-### 3. Ejecutar el proyecto
-
-1. Abrir `Ahorcado.sln` en Visual Studio
-2. Asegurarse que la cadena de conexión (`Web.config`) apunta a la base `AhorcadoDB`
-3. Compilar y ejecutar (Ctrl + F5)
+```
 
 ---
 
-## 🎮 Lógica del juego
+## 🧾 Extras
 
-* Se escoge una palabra aleatoria (no repetida).
-* Se tiene un tiempo según nivel:
-
-  * Fácil: 90s  | Normal: 60s | Difícil: 30s
-* Se permite un máximo de 5 errores.
-* Se muestran botones de letras (A-Z).
-* El juego termina al adivinar la palabra, agotar los errores o vencer el tiempo.
+- `AhorcadoDB.sql`: script con la estructura y 100 palabras + jugadores precargados.
+- `.bak`: respaldo opcional de la base de datos.
+- Código comentado para facilitar mantenimiento.
+- Interfaz mejorada con Bootstrap 5.
 
 ---
 
-## 🏆 Escalafón
+## 👥 Integrantes del Grupo
 
-* Cada victoria suma puntos según nivel:
-
-  * Fácil: +1 | Normal: +2 | Difícil: +3
-* Cada derrota resta:
-
-  * Fácil: -1 | Normal: -2 | Difícil: -3
-* Tabla ordenada por puntaje.
-
----
-
-## 📄 Extras
-
-* Archivo `AhorcadoDB.sql`: script con la estructura y datos precargados (jugadores y palabras)
-* Archivo `.bak`: respaldo opcional de la base.
-* Layout visualmente optimizado con Bootstrap.
-* Comentarios dentro del código para guiar la lógica.
-
----
-
-## 🤝 Integrantes
-
-| Nombre           | Carné      |
-| ---------------- | ---------- |
-| Eduardo Castro   | FI13005258 |
-| Brandon Cespedes | FH22012992 |
-| Jimena Flores    | FH23014559 |
-| Mariana Hidalgo  | FH23015127 |
+| Nombre            | Carné       | GitHub / Correo         |
+|-------------------|-------------|--------------------------|
+| Eduardo Castro    | FI13005258  | eduardo@example.com     |
+| Brandon Céspedes  | FH22012992  | brandon@example.com     |
+| Jimena Flores     | FH23014559  | jimena@example.com      |
+| Mariana Hidalgo   | FH23015127  | mariana@example.com     |
 
 ---
 
 ## 📬 Contacto
 
-Cualquier duda sobre la implementación puede consultarse durante la exposición o vía Campus Virtual.
+Cualquier duda será resuelta en la exposición o mediante el Campus Virtual.
