@@ -68,6 +68,51 @@ Ahorcado/
 1. Crear una base vacía llamada `AhorcadoDB`
 2. Ejecutar el script completo.
 
+erDiagram
+    JUGADOR ||--o{ PARTIDA : tiene
+    PALABRA ||--o{ PARTIDA : se_usa_en
+    PARTIDA ||--o{ INTENTO : genera
+
+    JUGADOR {
+        int Identificacion PK
+        nvarchar Nombre
+    }
+
+    PALABRA {
+        int PalabraID PK
+        nvarchar Texto
+        nvarchar TextoNormalizado (GENERATED)
+        bit TieneTilde
+        bit Usada
+    }
+
+    PARTIDA {
+        int PartidaID PK
+        int JugadorID FK
+        int PalabraID FK
+        nvarchar Nivel
+        datetime FechaInicio
+        int DuracionSegundos
+        nvarchar Resultado
+    }
+
+    INTENTO {
+        int IntentoID PK
+        int PartidaID FK
+        char Letra
+        bit EsCorrecta
+        datetime FechaIntento
+    }
+
+    ESCALAFON {
+        int Identificacion
+        nvarchar Nombre
+        int Marcador
+        int Ganadas
+        int Perdidas
+    }
+
+
 **Opcion 2:** Adjuntar el archivo `.bak` desde SSMS
 
 ### 3. Ejecutar el proyecto
