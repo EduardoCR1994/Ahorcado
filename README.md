@@ -178,8 +178,8 @@ erDiagram
 ## 👥 Integrantes del Grupo
 
 | Nombre            | Carné       | GitHub / Correo         |
-|-------------------|-------------|--------------------------|
-| Eduardo Castro    | FI13005258  | eduardo@example.com     |
+|-------------------|-------------|-------------------------|
+| Eduardo Castro    | FI13005258  | ecastro10015@ufide.ac.cr|
 | Brandon Céspedes  | FH22012992  | brandon@example.com     |
 | Jimena Flores     | FH23014559  | jimena@example.com      |
 | Mariana Hidalgo   | FH23015127  | mariana@example.com     |
