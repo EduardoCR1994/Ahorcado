@@ -1,0 +1,96 @@
+﻿@model Ahorcado.Models.Partida
+@{
+    ViewBag.Title = "Partida - Jugar";
+    var palabra = Model.Palabra.Texto;
+    var jugador = Model.Jugador.Nombre;
+    var nivel = Model.Nivel;
+    var partidaId = Model.PartidaID;
+}
+
+<h2>Jugar Partida</h2>
+
+<div>
+    <p><strong>Jugador:</strong> @jugador</p>
+    <p><strong>Nivel:</strong> @nivel</p>
+    <p><strong>Palabra:</strong> <span id="palabra-oculta"></span></p>
+    <p><strong>Intentos restantes:</strong> <span id="intentos">5</span></p>
+    <p><strong>Tiempo restante:</strong> <span id="tiempo"></span></p>
+</div>
+
+<div id="teclado">
+    @foreach (var letra in "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ")
+    {
+        <button class="letra" onclick="intentarLetra('@letra')" id="btn-@letra">@letra</button>
+    }
+</div>
+
+<div id="resultado" style="margin-top: 20px;"></div>
+
+@section Scripts {
+    <script>
+        const palabra = '@palabra'.toUpperCase();
+        const sinTildes = palabra.normalize("NFD").replace(/[̀-ͯ]/g, "");
+        let oculta = Array.from(sinTildes).map(l => l === ' ' ? ' ' : '_');
+        let intentos = 5;
+        let nivel = '@nivel';
+        let tiempoRestante = nivel === 'Facil' ? 90 : nivel === 'Normal' ? 60 : 30;
+        let duracion = 0;
+
+        document.getElementById("palabra-oculta").innerText = oculta.join(" ");
+        document.getElementById("tiempo").innerText = tiempoRestante + " segundos";
+
+        const timer = setInterval(() => {
+            tiempoRestante--;
+            duracion++;
+            document.getElementById("tiempo").innerText = tiempoRestante + " segundos";
+            if (tiempoRestante <= 0) finalizarJuego(false);
+        }, 1000);
+
+        function intentarLetra(letra) {
+            document.getElementById("btn-" + letra).disabled = true;
+            let acierto = false;
+
+            for (let i = 0; i < sinTildes.length; i++) {
+                if (sinTildes[i] === letra) {
+                    oculta[i] = palabra[i];
+                    acierto = true;
+                }
+            }
+
+            document.getElementById("palabra-oculta").innerText = oculta.join(" ");
+
+            if (!acierto) {
+                intentos--;
+                document.getElementById("intentos").innerText = intentos;
+            }
+
+            if (intentos <= 0) finalizarJuego(false);
+            if (!oculta.includes("_")) finalizarJuego(true);
+        }
+
+        function finalizarJuego(ganada) {
+            clearInterval(timer);
+            document.getElementById("resultado").innerText = ganada ? "¡Ganaste!" : "Perdiste. La palabra era: " + palabra;
+            document.getElementById("teclado").style.display = "none";
+
+            fetch('/Partidas/FinalizarPartida', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'RequestVerificationToken': $('input[name="__RequestVerificationToken\"]').val()
+    },
+    body: JSON.stringify({
+        id: @partidaId,
+        ganada: ganada,
+        duracion: duracion
+    })
+})
+.then(res => res.json())
+.then(data => {
+    if (data.success) {
+        window.location.href = '/Partidas/Escalafon';
+    }
+});
+        }
+    </script>
+}

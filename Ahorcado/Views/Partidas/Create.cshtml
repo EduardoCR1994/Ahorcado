@@ -1,0 +1,37 @@
+﻿@model Ahorcado.Models.Partida
+
+@{
+    ViewBag.Title = "Iniciar Partida";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg rounded">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Crear Nueva Partida</h2>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group mb-3">
+                    @Html.LabelFor(model => model.JugadorID, "Jugador", htmlAttributes: new { @class = "form-label" })
+                    @Html.DropDownList("JugadorID", null, "Seleccione un jugador", new { @class = "form-control" })
+                </div>
+
+                <div class="form-group mb-3">
+                    @Html.LabelFor(model => model.Nivel, "Nivel de dificultad", htmlAttributes: new { @class = "form-label" })
+                    @Html.DropDownList("Nivel", new SelectList(new[] { "Facil", "Normal", "Dificil" }), "Seleccione nivel", new { @class = "form-control" })
+                </div>
+
+                <button type="submit" class="btn btn-success">Iniciar Partida</button>
+                @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary ms-2" })
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

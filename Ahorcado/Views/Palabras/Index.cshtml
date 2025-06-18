@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Ahorcado.Models.Palabra>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Texto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TextoNormalizado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TieneTilde)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usada)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Texto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TextoNormalizado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TieneTilde)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usada)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PalabraID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PalabraID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PalabraID })
+        </td>
+    </tr>
+}
+
+</table>

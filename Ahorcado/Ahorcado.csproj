@@ -120,11 +120,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EscalafonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JugadoresController.cs" />
+    <Compile Include="Controllers\PalabrasController.cs" />
     <Compile Include="Controllers\PartidasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EscalafonViewModel.cs" />
     <Compile Include="Models\Escalafon.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -228,10 +232,24 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Partidas\Jugar.cshtml" />
+    <Content Include="Views\Escalafon\Index.cshtml" />
+    <Content Include="Views\Jugadores\Create.cshtml" />
+    <Content Include="Views\Jugadores\Delete.cshtml" />
+    <Content Include="Views\Jugadores\Details.cshtml" />
+    <Content Include="Views\Jugadores\Edit.cshtml" />
+    <Content Include="Views\Jugadores\Index.cshtml" />
+    <Content Include="Views\Palabras\Create.cshtml" />
+    <Content Include="Views\Palabras\Delete.cshtml" />
+    <Content Include="Views\Palabras\Details.cshtml" />
+    <Content Include="Views\Palabras\Edit.cshtml" />
+    <Content Include="Views\Palabras\Index.cshtml" />
+    <Content Include="Views\Partidas\Play.cshtml" />
+    <Content Include="Views\Partidas\Create.cshtml" />
+    <Content Include="Views\Partidas\Escalafon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Partidas\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

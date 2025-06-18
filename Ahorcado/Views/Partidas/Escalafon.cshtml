@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Ahorcado.Models.EscalafonViewModel>
+
+@{
+    ViewBag.Title = "🏆 Escalafón de Jugadores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">🏆 Escalafón de Jugadores</h3>
+        </div>
+        <div class="card-body">
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info">No hay partidas registradas aún.</div>
+            }
+            else
+            {
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Identificación</th>
+                            <th>Nombre</th>
+                            <th>Marcador</th>
+                            <th>Ganadas</th>
+                            <th>Perdidas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var jugador in Model)
+                        {
+                            <tr>
+                                <td>@jugador.Identificacion</td>
+                                <td>@jugador.Nombre</td>
+                                <td class="fw-bold @(jugador.Marcador >= 0 ? "text-success" : "text-danger")">@jugador.Marcador</td>
+                                <td>@jugador.Ganadas</td>
+                                <td>@jugador.Perdidas</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Ahorcado.Models.Escalafon>
+
+@{
+    ViewBag.Title = "Escalafón de Jugadores";
+}
+
+<h2>Escalafón de Jugadores</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Identificación</th>
+            <th>Nombre</th>
+            <th>Marcador</th>
+            <th>Ganadas</th>
+            <th>Perdidas</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var jugador in Model)
+        {
+            <tr>
+                <td>@jugador.Identificacion</td>
+                <td>@jugador.Nombre</td>
+                <td>@jugador.Marcador</td>
+                <td>@jugador.Ganadas</td>
+                <td>@jugador.Perdidas</td>
+            </tr>
+        }
+    </tbody>
+</table>

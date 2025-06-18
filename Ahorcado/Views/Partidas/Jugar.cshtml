@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Juego del Ahorcado";
+    var progreso = ViewBag.PalabraProgreso as string;
+    var letrasUsadas = ViewBag.LetrasUsadas as List<string>;
+    var resultado = ViewBag.Resultado as string;
+    var partidaID = (int)ViewBag.PartidaID;
+}
+
+<h2>Juego del Ahorcado</h2>
+
+<h3>Palabra: <span style="letter-spacing:10px; font-size:24px;">@progreso</span></h3>
+
+<p><strong>Intentos restantes:</strong> @ViewBag.IntentosRestantes</p>
+
+@if (!string.IsNullOrEmpty(resultado))
+{
+    <h3 style="color:@(resultado == "Ganada" ? "green" : "red")">
+        Resultado: @resultado
+    </h3>
+    <a href="@Url.Action("Crear", "Partidas")" class="btn btn-primary">Nueva partida</a>
+}
+else
+{
+    <form method="post" action="@Url.Action("IntentarLetra", "Partidas")">
+        <input type="hidden" name="idPartida" value="@partidaID" />
+
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; max-width: 600px;">
+            @foreach (var letra in ViewBag.TodasLetras)
+            {
+                bool usada = letrasUsadas.Contains(letra);
+                <button type="submit" name="letra" value="@letra" class="btn btn-sm @(usada ? "btn-secondary" : "btn-primary")" @(usada ? "disabled" : "")>
+                    @letra
+                </button>
+            }
+        </div>
+    </form>
+}
