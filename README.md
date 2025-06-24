@@ -180,7 +180,7 @@ erDiagram
 | Nombre            | Carné       | GitHub / Correo         |
 |-------------------|-------------|-------------------------|
 | Eduardo Castro    | FI13005258  | ecastro10015@ufide.ac.cr|
-| Brandon Céspedes  | FH22012992  | brandon@example.com     |
+| Brandon Céspedes  | FH22012992  | bcespedes@traarepuestos.com     |
 | Jimena Flores     | FH23014559  | jflores00335@ufide.ac.cr|
 | Mariana Hidalgo   | FH23015127  | lhidalgo70015@ufide.ac.cr|
 
