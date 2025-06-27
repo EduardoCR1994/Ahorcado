@@ -1,26 +1,27 @@
 ﻿@model Ahorcado.Models.Jugador
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle del Jugador";
 }
 
-<h2>Details</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<div>
-    <h4>Jugador</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
+<h2 class="text-center mb-4 text-white"><i class="fas fa-user"></i> Detalle del Jugador</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-
-    </dl>
+<div class="card shadow p-4 mb-5" style="background-color: #1e1e2f; color: white;">
+    <div class="mb-3">
+        <label class="form-label fw-bold text-white">🆔 Identificación:</label>
+        <p class="form-control-plaintext text-white">@Model.Identificacion</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label fw-bold text-white">👤 Nombre:</label>
+        <p class="form-control-plaintext text-white">@Model.Nombre</p>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Identificacion }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<div class="d-flex justify-content-between">
+    @Html.ActionLink("✏️ Editar", "Edit", new { id = Model.Identificacion }, new { @class = "btn btn-warning fw-bold" })
+    @Html.ActionLink("← Volver a la lista", "Index", null, new { @class = "btn btn-secondary fw-bold" })
+</div>
+
+

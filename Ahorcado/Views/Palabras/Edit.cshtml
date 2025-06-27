@@ -1,65 +1,47 @@
 ﻿@model Ahorcado.Models.Palabra
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar Palabra";
 }
 
-<h2>Edit</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Palabra</h4>
-        <hr />
+<h2 class="text-center mb-4 text-warning"><i class="fas fa-edit"></i> Editar Palabra</h2>
+
+<div class="card shadow p-4 bg-dark text-white">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         @Html.HiddenFor(model => model.PalabraID)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Texto, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Texto, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Texto, "", new { @class = "text-danger" })
-            </div>
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Texto, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.Texto, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Texto, "", new { @class = "text-danger" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TextoNormalizado, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TextoNormalizado, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TextoNormalizado, "", new { @class = "text-danger" })
-            </div>
+        <div class="mb-3">
+            @Html.LabelFor(model => model.TextoNormalizado, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.TextoNormalizado, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TextoNormalizado, "", new { @class = "text-danger" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TieneTilde, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.TieneTilde)
-                    @Html.ValidationMessageFor(model => model.TieneTilde, "", new { @class = "text-danger" })
-                </div>
-            </div>
+        <div class="form-check mb-3">
+            @Html.EditorFor(model => model.TieneTilde, new { htmlAttributes = new { @class = "form-check-input" } })
+            @Html.LabelFor(model => model.TieneTilde, htmlAttributes: new { @class = "form-check-label" })
+            @Html.ValidationMessageFor(model => model.TieneTilde, "", new { @class = "text-danger" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Usada, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Usada)
-                    @Html.ValidationMessageFor(model => model.Usada, "", new { @class = "text-danger" })
-                </div>
-            </div>
+        <div class="form-check mb-4">
+            @Html.EditorFor(model => model.Usada, new { htmlAttributes = new { @class = "form-check-input" } })
+            @Html.LabelFor(model => model.Usada, htmlAttributes: new { @class = "form-check-label" })
+            @Html.ValidationMessageFor(model => model.Usada, "", new { @class = "text-danger" })
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar Cambios</button>
+        @Html.ActionLink("← Volver a la lista", "Index", null, new { @class = "btn btn-secondary ms-2" })
+    }
 </div>
+

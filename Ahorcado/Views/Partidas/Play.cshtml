@@ -7,7 +7,29 @@
     var partidaId = Model.PartidaID;
 }
 
-<h2>Jugar Partida</h2>
+<h2 class="text-center mb-4"><i class="fas fa-gamepad"></i> Ahorcado - ¡Buena Suerte!</h2>
+
+<div class="card text-center p-4">
+    <p><strong>🎮 Jugador:</strong> @jugador</p>
+    <p><strong>🎯 Nivel:</strong> @nivel</p>
+
+    <h3 id="palabra-oculta" class="display-5 mt-4" style="letter-spacing: 12px;"></h3>
+
+    <div class="d-flex justify-content-center mt-3">
+        <div class="me-5"><strong>💥 Intentos:</strong> <span id="intentos" class="badge bg-danger fs-5">5</span></div>
+        <div><strong>⏱ Tiempo:</strong> <span id="tiempo" class="badge bg-warning text-dark fs-5">--</span></div>
+    </div>
+</div>
+
+<div id="teclado" class="text-center mt-5">
+    @foreach (var letra in "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ")
+    {
+        <button class="btn btn-secondary m-1 letra" onclick="intentarLetra('@letra')" id="btn-@letra">@letra</button>
+    }
+</div>
+
+<div id="resultado" class="text-center mt-4 fs-4 fw-bold"></div>
+
 
 <div>
     <p><strong>Jugador:</strong> @jugador</p>

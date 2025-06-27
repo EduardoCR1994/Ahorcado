@@ -6,32 +6,49 @@
     var partidaID = (int)ViewBag.PartidaID;
 }
 
-<h2>Juego del Ahorcado</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<h3>Palabra: <span style="letter-spacing:10px; font-size:24px;">@progreso</span></h3>
+<div class="container mt-4">
+    <div class="card bg-dark text-white shadow-lg p-4">
+        <h2 class="text-center mb-4"><i class="fas fa-skull-crossbones"></i> Juego del Ahorcado</h2>
 
-<p><strong>Intentos restantes:</strong> @ViewBag.IntentosRestantes</p>
+        <h4 class="text-center mb-3">
+            <span class="text-warning" style="letter-spacing:12px; font-size:30px;">@progreso</span>
+        </h4>
 
-@if (!string.IsNullOrEmpty(resultado))
-{
-    <h3 style="color:@(resultado == "Ganada" ? "green" : "red")">
-        Resultado: @resultado
-    </h3>
-    <a href="@Url.Action("Crear", "Partidas")" class="btn btn-primary">Nueva partida</a>
-}
-else
-{
-    <form method="post" action="@Url.Action("IntentarLetra", "Partidas")">
-        <input type="hidden" name="idPartida" value="@partidaID" />
+        <p class="text-center fs-5">
+            <strong>💥 Intentos restantes:</strong> <span class="badge bg-danger">@ViewBag.IntentosRestantes</span>
+        </p>
 
-        <div style="display: flex; flex-wrap: wrap; gap: 8px; max-width: 600px;">
-            @foreach (var letra in ViewBag.TodasLetras)
-            {
-                bool usada = letrasUsadas.Contains(letra);
-                <button type="submit" name="letra" value="@letra" class="btn btn-sm @(usada ? "btn-secondary" : "btn-primary")" @(usada ? "disabled" : "")>
-                    @letra
-                </button>
-            }
-        </div>
-    </form>
-}
+        @if (!string.IsNullOrEmpty(resultado))
+        {
+            <div class="text-center mt-3">
+                <h3 class="fw-bold" style="color:@(resultado == "Ganada" ? "limegreen" : "red")">
+                    🎉 Resultado: @resultado
+                </h3>
+                <a href="@Url.Action("Crear", "Partidas")" class="btn btn-success mt-3">
+                    <i class="fas fa-redo"></i> Nueva Partida
+                </a>
+            </div>
+        }
+        else
+        {
+            <form method="post" action="@Url.Action("IntentarLetra", "Partidas")" class="text-center mt-4">
+                <input type="hidden" name="idPartida" value="@partidaID" />
+
+                <div class="d-flex flex-wrap justify-content-center gap-2">
+                    @foreach (var letra in ViewBag.TodasLetras)
+                    {
+                        bool usada = letrasUsadas.Contains(letra);
+                        <button type="submit" name="letra" value="@letra"
+                                class="btn btn-sm fw-bold @(usada ? "btn-secondary" : "btn-outline-light")"
+                                @(usada ? "disabled" : "")>
+                            @letra
+                        </button>
+                    }
+                </div>
+            </form>
+        }
+    </div>
+</div>
+

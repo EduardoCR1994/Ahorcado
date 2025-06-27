@@ -1,43 +1,39 @@
 ﻿@model Ahorcado.Models.Jugador
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Crear Jugador";
 }
 
-<h2>Create</h2>
+<!-- Fuentes e íconos -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Jugador</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Identificacion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
-            </div>
+<div class="card bg-dark text-white p-4">
+    <h2 class="text-center mb-4"><i class="fas fa-user-plus"></i> Crear Nuevo Jugador</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-warning text-dark border border-warning", role = "alert" })
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Identificacion, htmlAttributes: new { @class = "form-label text-white" })
+            @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-            </div>
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "form-label text-white" })
+            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+        <div class="d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar Jugador</button>
+            @Html.ActionLink("← Volver a la lista", "Index", null, new { @class = "btn btn-secondary" })
         </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    }
 </div>
+
+

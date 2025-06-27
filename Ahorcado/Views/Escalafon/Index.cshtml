@@ -2,30 +2,43 @@
 
 @{
     ViewBag.Title = "Escalafón de Jugadores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Escalafón de Jugadores</h2>
+<!-- Estilos externos -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Identificación</th>
-            <th>Nombre</th>
-            <th>Marcador</th>
-            <th>Ganadas</th>
-            <th>Perdidas</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var jugador in Model)
-        {
-            <tr>
-                <td>@jugador.Identificacion</td>
-                <td>@jugador.Nombre</td>
-                <td>@jugador.Marcador</td>
-                <td>@jugador.Ganadas</td>
-                <td>@jugador.Perdidas</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container mt-4">
+    <div class="card shadow-lg rounded">
+        <div class="card-header bg-dark text-white">
+            <h2 class="mb-0"><i class="fas fa-trophy"></i> Escalafón de Jugadores</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover table-dark table-bordered text-center">
+                <thead class="table-secondary text-dark">
+                    <tr>
+                        <th><i class="fas fa-id-badge"></i> Identificación</th>
+                        <th><i class="fas fa-user"></i> Nombre</th>
+                        <th><i class="fas fa-star"></i> Marcador</th>
+                        <th><i class="fas fa-thumbs-up"></i> Ganadas</th>
+                        <th><i class="fas fa-thumbs-down"></i> Perdidas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var jugador in Model.OrderByDescending(j => j.Marcador))
+                    {
+                        <tr>
+                            <td>@jugador.Identificacion</td>
+                            <td>@jugador.Nombre</td>
+                            <td><strong>@jugador.Marcador</strong></td>
+                            <td class="text-success">@jugador.Ganadas</td>
+                            <td class="text-danger">@jugador.Perdidas</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,50 +1,31 @@
 ﻿@model Ahorcado.Models.Palabra
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalles de Palabra";
 }
 
-<h2>Details</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<div>
-    <h4>Palabra</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Texto)
-        </dt>
+<h2 class="text-center mb-4 text-info"><i class="fas fa-info-circle"></i> Detalles de la Palabra</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.Texto)
-        </dd>
+<div class="card bg-dark text-white shadow p-4">
+    <dl class="row">
+        <dt class="col-sm-4">Texto</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Texto)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TextoNormalizado)
-        </dt>
+        <dt class="col-sm-4">Texto Normalizado</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.TextoNormalizado)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.TextoNormalizado)
-        </dd>
+        <dt class="col-sm-4">¿Tiene Tilde?</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.TieneTilde)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TieneTilde)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TieneTilde)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Usada)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Usada)
-        </dd>
-
+        <dt class="col-sm-4">¿Ya fue usada?</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Usada)</dd>
     </dl>
+
+    <div class="mt-4">
+        @Html.ActionLink("✏️ Editar", "Edit", new { id = Model.PalabraID }, new { @class = "btn btn-warning me-2" })
+        @Html.ActionLink("← Volver a la lista", "Index", null, new { @class = "btn btn-secondary" })
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PalabraID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

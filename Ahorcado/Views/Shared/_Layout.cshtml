@@ -6,29 +6,69 @@
     <title>@ViewBag.Title - Ahorcado</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #0b0c2a;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ccc;
+        }
+
+            .navbar-dark .navbar-nav .nav-link:hover {
+                color: #fff;
+            }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("🎮 Ahorcado", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("🏠 Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("👤 Jugadores", "Index", "Jugadores", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("📖 Palabras", "Index", "Palabras", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("🎲 Partidas", "Index", "Partidas", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("🏆 Escalafón", "Escalafon", "Partidas", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
+    <div class="wrapper">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+            <div class="container">
+                @Html.ActionLink("🎮 Ahorcado", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li>@Html.ActionLink("🏠 Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("👤 Jugadores", "Index", "Jugadores", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("📖 Palabras", "Index", "Palabras", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("🎲 Partidas", "Index", "Partidas", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("🏆 Escalafón", "Escalafon", "Partidas", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>
+                </div>
             </div>
+        </nav>
+
+        <div class="container body-content main-content">
+            @RenderBody()
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
+
         <footer>
             <p>&copy; @DateTime.Now.Year - Juego del Ahorcado</p>
         </footer>

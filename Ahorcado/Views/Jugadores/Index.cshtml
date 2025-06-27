@@ -1,33 +1,37 @@
 ﻿@model IEnumerable<Ahorcado.Models.Jugador>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista de Jugadores";
 }
 
-<h2>Index</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<h2 class="text-center mb-4"><i class="fas fa-users"></i> Lista de Jugadores</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th></th>
-    </tr>
+<div class="text-end mb-3">
+    @Html.ActionLink("➕ Agregar Jugador", "Create", null, new { @class = "btn btn-success" })
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Identificacion }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Identificacion }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Identificacion })
-        </td>
-    </tr>
-}
-
+<table class="table table-dark table-hover table-bordered text-center align-middle">
+    <thead class="table-primary">
+        <tr>
+            <th>Identificación</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Identificacion</td>
+                <td>@item.Nombre</td>
+                <td>
+                    @Html.ActionLink("✏️ Editar", "Edit", new { id = item.Identificacion }, new { @class = "btn btn-warning btn-sm me-1" })
+                    @Html.ActionLink("📄 Detalles", "Details", new { id = item.Identificacion }, new { @class = "btn btn-info btn-sm me-1" })
+                    @Html.ActionLink("🗑 Eliminar", "Delete", new { id = item.Identificacion }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+

@@ -5,33 +5,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-4">
-    <div class="card shadow-lg rounded">
-        <div class="card-header bg-primary text-white">
-            <h2 class="mb-0">Crear Nueva Partida</h2>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<div class="card">
+    <h2 class="text-center mb-4"><i class="fas fa-gamepad"></i> Iniciar Nueva Partida</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="mb-3">
+            @Html.Label("JugadorID", "Jugador", htmlAttributes: new { @class = "form-label" })
+            @Html.DropDownList("JugadorID", null, "Seleccione un jugador", new { @class = "form-control" })
         </div>
-        <div class="card-body">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
 
-                <div class="form-group mb-3">
-                    @Html.LabelFor(model => model.JugadorID, "Jugador", htmlAttributes: new { @class = "form-label" })
-                    @Html.DropDownList("JugadorID", null, "Seleccione un jugador", new { @class = "form-control" })
-                </div>
-
-                <div class="form-group mb-3">
-                    @Html.LabelFor(model => model.Nivel, "Nivel de dificultad", htmlAttributes: new { @class = "form-label" })
-                    @Html.DropDownList("Nivel", new SelectList(new[] { "Facil", "Normal", "Dificil" }), "Seleccione nivel", new { @class = "form-control" })
-                </div>
-
-                <button type="submit" class="btn btn-success">Iniciar Partida</button>
-                @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary ms-2" })
-            }
+        <div class="mb-4">
+            @Html.Label("Nivel", "Nivel de dificultad", htmlAttributes: new { @class = "form-label" })
+            @Html.DropDownList("Nivel", new SelectList(new[] { "Facil", "Normal", "Dificil" }), "Seleccione nivel", new { @class = "form-control" })
         </div>
-    </div>
+
+        <button type="submit" class="btn"><i class="fas fa-play"></i> Iniciar Partida</button>
+        @Html.ActionLink("← Volver a la lista", "Index", null, new { @class = "btn" })
+    }
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

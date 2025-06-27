@@ -1,33 +1,85 @@
 ﻿@{
-    ViewBag.Title = "Inicio del Juego del Ahorcado";
+    ViewBag.Title = "Inicio";
 }
 
-<h2>🎮 Bienvenido al Juego del Ahorcado</h2>
+<!-- Font Awesome y Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<p>Usa las opciones siguientes para comenzar a jugar:</p>
+<style>
+    body {
+        background: #0b0c2a;
+        color: #ffffff;
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+    }
 
-<div class="row" style="margin-top:20px;">
-    <div class="col-md-6">
-        <a href="@Url.Action("Create", "Jugadores")" class="btn btn-success btn-lg btn-block">
-            ➕ Crear Jugador
-        </a>
-    </div>
-    <div class="col-md-6">
-        <a href="@Url.Action("Create", "Palabras")" class="btn btn-warning btn-lg btn-block">
-            📝 Agregar Palabra
-        </a>
+    .container-main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* ocupa toda la altura */
+        padding: 0 20px;
+        text-align: center;
+    }
+
+    .title {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        color: #f0f0f0;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        color: #bbbbbb;
+        margin-bottom: 30px;
+    }
+
+    .btn-panel {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .game-button {
+        background-color: #16213e;
+        border: none;
+        padding: 20px;
+        border-radius: 15px;
+        color: #fff;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+    }
+
+        .game-button:hover {
+            transform: scale(1.05);
+            background-color: #1f2a53;
+        }
+
+        .game-button i {
+            font-size: 1.5rem;
+        }
+</style>
+
+<div class="container-main">
+    <h1 class="title"><i class="fas fa-gamepad"></i> Juego del Ahorcado</h1>
+    <p class="subtitle">Elige una opción para comenzar</p>
+
+    <div class="btn-panel">
+        <a href="/Jugadores/Create" class="game-button"><i class="fas fa-user-plus"></i> Crear Jugador</a>
+        <a href="/Partidas/Create" class="game-button"><i class="fas fa-dice"></i> Iniciar Partida</a>
+        <a href="/Palabras/Create" class="game-button"><i class="fas fa-pen"></i> Agregar Palabra</a>
+        <a href="/Escalafon" class="game-button"><i class="fas fa-chart-bar"></i> Ver Escalafón</a>
     </div>
 </div>
 
-<div class="row" style="margin-top:20px;">
-    <div class="col-md-6">
-        <a href="@Url.Action("Create", "Partidas")" class="btn btn-primary btn-lg btn-block">
-            🎲 Iniciar Partida
-        </a>
-    </div>
-    <div class="col-md-6">
-        <a href="@Url.Action("Index", "Escalafon")" class="btn btn-info btn-lg btn-block">
-            📊 Ver Escalafón
-        </a>
-    </div>
-</div>
+
