@@ -93,17 +93,28 @@ namespace Ahorcado.Controllers
         [HttpPost]
         public JsonResult FinalizarPartida(int id, bool ganada, int duracion)
         {
+            string palabraCorrecta = null;
+
             using (var db = new AhorcadoDBEntities())
             {
-                var partida = db.Partida.Find(id);
+                var partida = db.Partida.Include(p => p.Palabra).FirstOrDefault(p => p.PartidaID == id);
                 if (partida != null)
                 {
                     partida.Resultado = ganada ? "Ganada" : "Perdida";
                     partida.DuracionSegundos = duracion;
+                    if (!ganada)
+                    {
+                        palabraCorrecta = partida.Palabra.Texto; // Suponiendo que el campo se llama Texto
+                    }
                     db.SaveChanges();
                 }
             }
-            return Json(new { success = true });
+
+            return Json(new
+            {
+                success = true,
+                palabra = palabraCorrecta
+            });
         }
         public ActionResult Escalafon()
         {

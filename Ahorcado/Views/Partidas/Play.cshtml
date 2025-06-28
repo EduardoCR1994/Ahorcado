@@ -29,24 +29,7 @@
 </div>
 
 <div id="resultado" class="text-center mt-4 fs-4 fw-bold"></div>
-
-
-<div>
-    <p><strong>Jugador:</strong> @jugador</p>
-    <p><strong>Nivel:</strong> @nivel</p>
-    <p><strong>Palabra:</strong> <span id="palabra-oculta"></span></p>
-    <p><strong>Intentos restantes:</strong> <span id="intentos">5</span></p>
-    <p><strong>Tiempo restante:</strong> <span id="tiempo"></span></p>
-</div>
-
-<div id="teclado">
-    @foreach (var letra in "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ")
-    {
-        <button class="letra" onclick="intentarLetra('@letra')" id="btn-@letra">@letra</button>
-    }
-</div>
-
-<div id="resultado" style="margin-top: 20px;"></div>
+<div id="mensajePalabraPerdida" class="text-center fs-4 fw-bold text-danger" style="display:none; margin-top: 20px;"></div>
 
 @section Scripts {
     <script>
@@ -57,6 +40,7 @@
         let nivel = '@nivel';
         let tiempoRestante = nivel === 'Facil' ? 90 : nivel === 'Normal' ? 60 : 30;
         let duracion = 0;
+        let partidaId = @partidaId;
 
         document.getElementById("palabra-oculta").innerText = oculta.join(" ");
         document.getElementById("tiempo").innerText = tiempoRestante + " segundos";
@@ -92,27 +76,39 @@
 
         function finalizarJuego(ganada) {
             clearInterval(timer);
-            document.getElementById("resultado").innerText = ganada ? "¡Ganaste!" : "Perdiste. La palabra era: " + palabra;
             document.getElementById("teclado").style.display = "none";
 
             fetch('/Partidas/FinalizarPartida', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'RequestVerificationToken': $('input[name="__RequestVerificationToken\"]').val()
-    },
-    body: JSON.stringify({
-        id: @partidaId,
-        ganada: ganada,
-        duracion: duracion
-    })
-})
-.then(res => res.json())
-.then(data => {
-    if (data.success) {
-        window.location.href = '/Partidas/Escalafon';
-    }
-});
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken\"]').val()
+                },
+                body: JSON.stringify({
+                    id: partidaId,
+                    ganada: ganada,
+                    duracion: duracion
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    if (!ganada && data.palabra) {
+                        document.getElementById("mensajePalabraPerdida").innerText = "La palabra era: " + data.palabra;
+                        $('#mensajePalabraPerdida').fadeIn();
+
+                        setTimeout(function () {
+                            $('#mensajePalabraPerdida').fadeOut(function () {
+                                window.location.href = '/Partidas/Escalafon';
+                            });
+                        }, 2000);
+                    } else {
+                        window.location.href = '/Partidas/Escalafon';
+                    }
+                }
+            });
+
+            document.getElementById("resultado").innerText = ganada ? "¡Ganaste!" : "Perdiste";
         }
     </script>
 }
