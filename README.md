@@ -6,7 +6,15 @@
 **Grupo:** Eduardo Castro, Brandon Céspedes, Jimena Flores, Mariana Hidalgo
 
 ---
+## 👥 Integrantes del Grupo
 
+| Nombre            | Carné       | GitHub / Correo         |
+|-------------------|-------------|-------------------------|
+| Eduardo Castro    | FI13005258  | ecastro10015@ufide.ac.cr|
+| Brandon Céspedes  | FH22012992  | bcespedes@traarepuestos.com     |
+| Jimena Flores     | FH23014559  | jflores00335@ufide.ac.cr|
+| Mariana Hidalgo   | FH23015127  | lhidalgo70015@ufide.ac.cr|
+---
 ## 🧠 Descripción
 
 Este es un proyecto web desarrollado en **ASP.NET MVC 5** (Framework 4.8.1) que simula el juego clásico del Ahorcado. Incluye:
@@ -175,16 +183,6 @@ erDiagram
 
 ---
 
-## 👥 Integrantes del Grupo
-
-| Nombre            | Carné       | GitHub / Correo         |
-|-------------------|-------------|-------------------------|
-| Eduardo Castro    | FI13005258  | ecastro10015@ufide.ac.cr|
-| Brandon Céspedes  | FH22012992  | bcespedes@traarepuestos.com     |
-| Jimena Flores     | FH23014559  | jflores00335@ufide.ac.cr|
-| Mariana Hidalgo   | FH23015127  | lhidalgo70015@ufide.ac.cr|
-
----
 
 ## 📬 Contacto
 
