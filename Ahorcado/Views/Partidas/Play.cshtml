@@ -1,11 +1,16 @@
 ﻿@model Ahorcado.Models.Partida
 @{
     ViewBag.Title = "Partida - Jugar";
-    var palabra = Model.Palabra.Texto;
+    var palabra = Model.Palabra.Texto.Normalize(System.Text.NormalizationForm.FormC);
     var jugador = Model.Jugador.Nombre;
+    var jugadorId = Model.Jugador.Identificacion;
     var nivel = Model.Nivel;
     var partidaId = Model.PartidaID;
 }
+
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <h2 class="text-center mb-4"><i class="fas fa-gamepad"></i> Ahorcado - ¡Buena Suerte!</h2>
 
@@ -24,23 +29,24 @@
 <div id="teclado" class="text-center mt-5">
     @foreach (var letra in "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ")
     {
-        <button class="btn btn-secondary m-1 letra" onclick="intentarLetra('@letra')" id="btn-@letra">@letra</button>
+        <button class="btn btn-dark m-1 letra" onclick="intentarLetra('@letra')" id="btn-@letra">@letra</button>
     }
 </div>
 
-<div id="resultado" class="text-center mt-4 fs-4 fw-bold"></div>
+<div id="resultado" class="text-center mt-4 fs-4 fw-bold text-success"></div>
 <div id="mensajePalabraPerdida" class="text-center fs-4 fw-bold text-danger" style="display:none; margin-top: 20px;"></div>
 
 @section Scripts {
     <script>
-        const palabra = '@palabra'.toUpperCase();
-        const sinTildes = palabra.normalize("NFD").replace(/[̀-ͯ]/g, "");
-        let oculta = Array.from(sinTildes).map(l => l === ' ' ? ' ' : '_');
+        const palabra = '@Html.Raw(palabra)'.normalize("NFC").toUpperCase();
+        const letras = Array.from(palabra);
+        let oculta = letras.map(l => l === ' ' ? ' ' : '_');
         let intentos = 5;
         let nivel = '@nivel';
         let tiempoRestante = nivel === 'Facil' ? 90 : nivel === 'Normal' ? 60 : 30;
         let duracion = 0;
         let partidaId = @partidaId;
+        let jugadorId = '@jugadorId';
 
         document.getElementById("palabra-oculta").innerText = oculta.join(" ");
         document.getElementById("tiempo").innerText = tiempoRestante + " segundos";
@@ -52,13 +58,17 @@
             if (tiempoRestante <= 0) finalizarJuego(false);
         }, 1000);
 
+        function quitarTildes(letra) {
+            return letra.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
         function intentarLetra(letra) {
             document.getElementById("btn-" + letra).disabled = true;
             let acierto = false;
 
-            for (let i = 0; i < sinTildes.length; i++) {
-                if (sinTildes[i] === letra) {
-                    oculta[i] = palabra[i];
+            for (let i = 0; i < letras.length; i++) {
+                if (quitarTildes(letras[i]) === letra) {
+                    oculta[i] = letras[i];
                     acierto = true;
                 }
             }
@@ -93,10 +103,44 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    if (!ganada && data.palabra) {
+                    if (ganada) {
+                        Swal.fire({
+                            title: '¡Ganaste! 🎉',
+                            html: `
+                                <p>¿Qué quieres hacer ahora?</p>
+                                <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
+                                    <button id="btnFacil" class="swal2-confirm swal2-styled">Fácil</button>
+                                    <button id="btnNormal" class="swal2-confirm swal2-styled" style="background-color:#3085d6;">Normal</button>
+                                    <button id="btnDificil" class="swal2-confirm swal2-styled" style="background-color:#d33;">Difícil</button>
+                                    <button id="btnPersonalizar" class="swal2-confirm swal2-styled" style="background-color:#6c757d;">🔧 Personalizar</button>
+                                    <button id="btnSalir" class="swal2-cancel swal2-styled" style="margin-top:5px;">Salir</button>
+                                </div>
+                            `,
+                            showConfirmButton: false,
+                            showCancelButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            didOpen: () => {
+                                document.getElementById('btnFacil').addEventListener('click', () => {
+                                    window.location.href = `/Partidas/Create?Nivel=Facil&JugadorID=${jugadorId}`;
+                                });
+                                document.getElementById('btnNormal').addEventListener('click', () => {
+                                    window.location.href = `/Partidas/Create?Nivel=Normal&JugadorID=${jugadorId}`;
+                                });
+                                document.getElementById('btnDificil').addEventListener('click', () => {
+                                    window.location.href = `/Partidas/Create?Nivel=Dificil&JugadorID=${jugadorId}`;
+                                });
+                                document.getElementById('btnPersonalizar').addEventListener('click', () => {
+                                    window.location.href = `/Partidas/Create?JugadorID=${jugadorId}`;
+                                });
+                                document.getElementById('btnSalir').addEventListener('click', () => {
+                                    window.location.href = '/Partidas/Escalafon';
+                                });
+                            }
+                        });
+                    } else if (data.palabra) {
                         document.getElementById("mensajePalabraPerdida").innerText = "La palabra era: " + data.palabra;
                         $('#mensajePalabraPerdida').fadeIn();
-
                         setTimeout(function () {
                             $('#mensajePalabraPerdida').fadeOut(function () {
                                 window.location.href = '/Partidas/Escalafon';

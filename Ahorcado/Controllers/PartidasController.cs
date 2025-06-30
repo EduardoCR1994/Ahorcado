@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Ahorcado.Models;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web.Mvc;
-using Ahorcado.Models;
 
 namespace Ahorcado.Controllers
 {
@@ -19,10 +20,10 @@ namespace Ahorcado.Controllers
         }
 
         // GET: Partidas/Create
-        public ActionResult Create()
+        public ActionResult Create(int? JugadorID, string Nivel = null)
         {
-            ViewBag.JugadorID = new SelectList(db.Jugador, "Identificacion", "Nombre");
-            ViewBag.Nivel = new SelectList(new[] { "Facil", "Normal", "Dificil" });
+            ViewBag.JugadorID = new SelectList(db.Jugador, "Identificacion", "Nombre", JugadorID);
+            ViewBag.Nivel = new SelectList(new[] { "Facil", "Normal", "Dificil" }, Nivel);
             return View();
         }
 
@@ -52,7 +53,7 @@ namespace Ahorcado.Controllers
                     PalabraID = palabra.PalabraID,
                     Nivel = Nivel,
                     FechaInicio = DateTime.Now,
-                    Resultado = "Pendiente", // Usa 'Pendiente' si tu constraint lo permite, o cambia a null si la BD lo acepta
+                    Resultado = "Pendiente", 
                     DuracionSegundos = 0
                 };
 
@@ -69,18 +70,26 @@ namespace Ahorcado.Controllers
         }
 
 
-
         // GET: Partidas/Play/{id}
         public ActionResult Play(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var partida = db.Partida.Include(p => p.Palabra).Include(p => p.Jugador).FirstOrDefault(p => p.PartidaID == id);
+            var partida = db.Partida
+                .Include(p => p.Palabra)
+                .Include(p => p.Jugador)
+                .FirstOrDefault(p => p.PartidaID == id);
+
             if (partida == null) return HttpNotFound();
 
-            // lógica de vista de juego pendiente
+            if (partida.Palabra != null && partida.Palabra.Texto != null)
+            {
+                partida.Palabra.Texto = partida.Palabra.Texto.Normalize(NormalizationForm.FormC);
+            }
+
             return View(partida);
         }
+
 
         protected override void Dispose(bool disposing)
         {
