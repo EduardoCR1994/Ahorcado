@@ -14,9 +14,9 @@
 | Brandon Céspedes  | FH22012992  | bcespedes@traarepuestos.com     |
 | Jimena Flores     | FH23014559  | jflores00335@ufide.ac.cr|
 | Mariana Hidalgo   | FH23015127  | lhidalgo70015@ufide.ac.cr|
-
-## 🧠 Descripción
 ---
+## 🧠 Descripción
+
 Este es un proyecto web desarrollado en **ASP.NET MVC 5** (Framework 4.8.1) que simula el juego clásico del Ahorcado. Incluye:
 
 - Módulo para gestión de palabras del diccionario.
@@ -183,8 +183,6 @@ erDiagram
 
 ---
 
-
----
 
 ## 📬 Contacto
 
