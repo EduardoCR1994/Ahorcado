@@ -1,51 +1,52 @@
 ﻿@model IEnumerable<Ahorcado.Models.EscalafonViewModel>
-
 @{
     ViewBag.Title = "🏆 Escalafón de Jugadores";
 }
-
 <!-- Google Fonts y Font Awesome (si no están ya en el layout) -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
 <div class="card p-4 mt-4">
     <h2 class="text-center mb-4"><i class="fas fa-trophy"></i> Escalafón de Jugadores</h2>
-
     @if (!Model.Any())
     {
-        <div class="alert alert-info text-center">No hay partidas registradas aún.</div>
+    <div class="alert alert-info text-center">No hay partidas registradas aún.</div>
     }
     else
     {
-        <table class="table table-dark table-hover text-center rounded">
-            <thead class="thead-light">
-                <tr>
-                    <th>#</th>
-                    <th>👤 Nombre</th>
-                    <th>🏅 Marcador</th>
-                    <th>✅ Ganadas</th>
-                    <th>❌ Perdidas</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
+    <table class="table table-dark table-hover text-center rounded">
+        <thead class="thead-light">
+            <tr>
+                <th>#</th>
+                <th>👤 Nombre</th>
+                <th>🏅 Marcador</th>
+                <th>✅ Ganadas</th>
+                <th>❌ Perdidas</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
                     int rank = 1;
                     foreach (var jugador in Model.OrderByDescending(j => j.Marcador))
                     {
                         string colorClass = rank == 1 ? "text-warning" : rank == 2 ? "text-secondary" : rank == 3 ? "text-danger" : "text-white";
-                        <tr class="@colorClass fw-bold">
-                            <td>@rank</td>
-                            <td>@jugador.Nombre</td>
-                            <td class="@(jugador.Marcador >= 0 ? "text-success" : "text-danger")">@jugador.Marcador</td>
-                            <td>@jugador.Ganadas</td>
-                            <td>@jugador.Perdidas</td>
-                        </tr>
+                <tr class="@colorClass fw-bold">
+                    <td>@rank</td>
+                    <td>@jugador.Nombre</td>
+                    <td class="@(jugador.Marcador >= 0 ? "text-success" : "text-danger")">@jugador.Marcador</td>
+                    <td>@jugador.Ganadas</td>
+                    <td>@jugador.Perdidas</td>
+                </tr>
                         rank++;
                     }
-                }
-            </tbody>
-        </table>
+            }
+        </tbody>
+    </table>
     }
+
+    <!-- Botón -->
+    <div class="text-center mt-4">
+        @Html.ActionLink("🎮 Nueva Partida", "Create", "Partidas", null, new { @class = "btn btn-nueva-partida btn-lg px-4 py-2" })
+    </div>
 </div>
 
 <style>
@@ -78,5 +79,23 @@
     .text-danger {
         color: #e74c3c !important;
     }
-</style>
+    
+    .btn-nueva-partida {
+        background: linear-gradient(45deg, #28a745, #20c997);
+        border: none;
+        border-radius: 25px;
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
 
+        .btn-nueva-partida:hover {
+            background: linear-gradient(45deg, #20c997, #28a745);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+</style>
