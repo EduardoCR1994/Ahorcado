@@ -23,7 +23,7 @@ namespace Ahorcado.Controllers
         public ActionResult Create(int? JugadorID, string Nivel = null)
         {
             ViewBag.JugadorID = new SelectList(db.Jugador, "Identificacion", "Nombre", JugadorID);
-            ViewBag.Nivel = new SelectList(new[] { "Fácil", "Normal", "Difícil" }, Nivel);
+            ViewBag.Nivel = new SelectList(new[] { "Facil", "Normal", "Dificil" }, Nivel);
             return View();
         }
 

@@ -126,5 +126,7 @@ namespace Ahorcado.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
+
 }
