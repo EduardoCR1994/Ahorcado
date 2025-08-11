@@ -31,44 +31,53 @@ namespace Ahorcado.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(int JugadorID, string Nivel)
         {
-            if (string.IsNullOrEmpty(Nivel) || !(new[] { "Fácil", "Normal", "Difícil" }).Contains(Nivel))
-            {
+            var permitidos = new[] { "Facil", "Normal", "Dificil" };
+            if (string.IsNullOrWhiteSpace(Nivel) || !permitidos.Contains(Nivel))
                 ModelState.AddModelError("Nivel", "Debe seleccionar un nivel válido.");
-            }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var palabra = db.Palabra.FirstOrDefault(p => !p.Usada);
-                if (palabra == null)
-                {
-                    ModelState.AddModelError("", "No hay palabras disponibles en el diccionario.");
-                    ViewBag.JugadorID = new SelectList(db.Jugador, "Identificacion", "Nombre", JugadorID);
-                    ViewBag.Nivel = new SelectList(new[] {"Fácil", "Normal", "Difícil" }, Nivel);
-                    return View(new Partida { JugadorID = JugadorID, Nivel = Nivel });
-                }
-
-                var partida = new Partida
-                {
-                    JugadorID = JugadorID,
-                    PalabraID = palabra.PalabraID,
-                    Nivel = Nivel,
-                    FechaInicio = DateTime.Now,
-                    Resultado = "Pendiente", 
-                    DuracionSegundos = 0
-                };
-
-                palabra.Usada = true;
-                db.Partida.Add(partida);
-                db.SaveChanges();
-
-                return RedirectToAction("Play", new { id = partida.PartidaID });
+                ViewBag.JugadorID = new SelectList(db.Jugador, "Identificacion", "Nombre", JugadorID);
+                // repoblar combo de nivel
+                ViewBag.Nivel = new SelectList(
+                    new[] {
+                new { Value="Facil",   Text="Fácil"   },
+                new { Value="Normal",  Text="Normal"  },
+                new { Value="Dificil", Text="Difícil" }
+                    }, "Value", "Text", Nivel);
+                return View(new Partida { JugadorID = JugadorID, Nivel = Nivel });
             }
 
-            ViewBag.JugadorID = new SelectList(db.Jugador, "Identificacion", "Nombre", JugadorID);
-            ViewBag.Nivel = new SelectList(new[] {"Fácil", "Normal", "Difícil" }, Nivel);
-            return View(new Partida { JugadorID = JugadorID, Nivel = Nivel });
-        }
+            var palabra = db.Palabra.FirstOrDefault(p => !p.Usada);
+            if (palabra == null)
+            {
+                ModelState.AddModelError("", "No hay palabras disponibles en el diccionario.");
+                ViewBag.JugadorID = new SelectList(db.Jugador, "Identificacion", "Nombre", JugadorID);
+                ViewBag.Nivel = new SelectList(
+                    new[] {
+                new { Value="Facil",   Text="Fácil"   },
+                new { Value="Normal",  Text="Normal"  },
+                new { Value="Dificil", Text="Difícil" }
+                    }, "Value", "Text", Nivel);
+                return View(new Partida { JugadorID = JugadorID, Nivel = Nivel });
+            }
 
+            var partida = new Partida
+            {
+                JugadorID = JugadorID,
+                PalabraID = palabra.PalabraID,
+                Nivel = Nivel,                 // <- sin tildes
+                FechaInicio = DateTime.Now,
+                Resultado = "Pendiente",
+                DuracionSegundos = 0
+            };
+
+            palabra.Usada = true;
+            db.Partida.Add(partida);
+            db.SaveChanges();
+
+            return RedirectToAction("Play", new { id = partida.PartidaID });
+        }
 
         // GET: Partidas/Play/{id}
         public ActionResult Play(int? id)

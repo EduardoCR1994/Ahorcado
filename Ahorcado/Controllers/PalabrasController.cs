@@ -145,5 +145,17 @@ namespace Ahorcado.Controllers
             }
             base.Dispose(disposing);
         }
+
+        // POST: Palabras/ResetUsadas
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetUsadas()
+        {
+            // Opción rápida/eficiente (una sola sentencia SQL)
+            db.Database.ExecuteSqlCommand("UPDATE dbo.Palabra SET Usada = 0 WHERE Usada = 1");
+            TempData["Msg"] = "Se reiniciaron todas las palabras usadas.";
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -22,9 +22,19 @@
         </div>
 
         <div class="mb-4">
-            @Html.Label("Nivel", "Nivel de dificultad", htmlAttributes: new { @class = "form-label" })
-            @Html.DropDownList("Nivel", new SelectList(new[] { "Fácil", "Normal", "Difícil" }), "Seleccione nivel", new { @class = "form-control" })
+            @Html.Label("Nivel", "Nivel de dificultad", new { @class = "form-label" })
+            @Html.DropDownList(
+                "Nivel",
+                new List<SelectListItem> {
+                    new SelectListItem { Value = "Facil",   Text = "Fácil"   },
+                    new SelectListItem { Value = "Normal",  Text = "Normal"  },
+                    new SelectListItem { Value = "Dificil", Text = "Difícil" }
+                },
+                "Seleccione nivel",
+                new { @class = "form-control" }
+            )
         </div>
+
 
         <button type="submit" class="btn"><i class="fas fa-play"></i> Iniciar Partida</button>
         @Html.ActionLink("← Volver a la lista", "Escalafon", null, new { @class = "btn" })
