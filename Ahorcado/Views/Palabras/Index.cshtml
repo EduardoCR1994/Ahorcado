@@ -2,31 +2,59 @@
 
 @{
     ViewBag.Title = "Listado de Palabras";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var total = Model?.Count() ?? 0;
 }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 <style>
-    .card {
-        background: #121418;
-        border: 1px solid #222832;
-        border-radius: 18px;
-        box-shadow: 0 10px 24px rgba(0,0,0,.35);
-        padding: 22px;
+
+    .table {
+        background: transparent !important;
+    }
+
+        
+        .table td,
+        .table th {
+            background-color: transparent !important;
+            color: #e4e9f5; 
+        }
+
+    .card-title {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        color: #e9eef9;
+        font-weight: 600;
+        margin: 0 0 10px 0;
+    }
+
+    .subtitle {
+        color: #c5d4ff;
+        font-size: .9rem;
+    }
+
+    .toolbar {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
     }
 
     .btn {
+        border-radius: 12px !important;
+        padding: .55rem .9rem !important;
+        font-weight: 600;
         background: #1e293b;
         border: 1px solid #2b3546;
         color: #e5e7eb;
-        border-radius: 12px;
-        padding: .5rem .9rem;
         transition: transform .05s ease, filter .15s ease;
+        text-decoration: none;
     }
 
         .btn:hover {
-            filter: brightness(1.15);
+            filter: brightness(1.12);
             transform: translateY(-1px);
         }
 
@@ -42,40 +70,6 @@
         color: #111827;
     }
 
-    .toolbar {
-        gap: .6rem;
-    }
-
-    .table {
-        margin-bottom: 0
-    }
-
-    thead th {
-        position: sticky;
-        top: 0;
-        background: #0f1319;
-        z-index: 2;
-    }
-
-    .badge {
-        font-weight: 600;
-        border-radius: 10px;
-        padding: .35rem .55rem;
-    }
-
-    .badge-ok {
-        background: #16a34a;
-    }
-
-    .badge-warn {
-        background: #f59e0b;
-        color: #111827;
-    }
-
-    .badge-off {
-        background: #374151;
-    }
-
     .search {
         background: #0b0f14;
         border: 1px solid #1f2937;
@@ -85,28 +79,86 @@
         width: 260px;
     }
 
+    .table-wrap {
+        overflow: auto;
+        border-radius: 14px;
+        border: 1px solid #2b3658;
+        max-height: 64vh;
+    }
+
+    table.table {
+        margin: 0;
+        background: transparent;
+        color: #e4e9f5;
+    }
+
+    thead th {
+        background: rgba(15,19,25,0.7);
+        color: #eaf2ff;
+        border-bottom: 0 !important;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
+
+    tbody tr {
+        transition: background .15s ease;
+    }
+
+        tbody tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+    td, th {
+        vertical-align: middle !important;
+    }
+
+    .badge {
+        font-weight: 600;
+        border-radius: 10px;
+        padding: .35rem .55rem;
+        display: inline-block;
+    }
+
+    .badge-ok {
+        background: #16a34a;
+        color: #fff;
+    }
+
+    .badge-warn {
+        background: #f59e0b;
+        color: #111827;
+    }
+
+    .badge-off {
+        background: #374151;
+        color: #e5e7eb;
+    }
+
     .actions .btn {
-        padding: .35rem .6rem;
-        font-size: .9rem;
+        padding: .35rem .6rem !important;
+        font-size: .9rem !important;
+    }
+
+    .empty {
+        text-align: center;
+        padding: 36px;
+        color: #c5d4ff;
     }
 </style>
 
-<div class="card">
+<div class="card-wrap">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <div>
-            <h2 class="mb-1" style="font-family:Poppins,system-ui;">
+            <h2 class="card-title">
                 <i class="fas fa-book"></i> Palabras registradas
             </h2>
-            <div class="text-muted small">
-                Total: <strong>@Model.Count()</strong>
-            </div>
+            <div class="subtitle">Total: <strong>@total</strong></div>
         </div>
 
-        <div class="d-flex align-items-center toolbar">
-            <input id="search" class="search" type="search" placeholder="Buscar por texto…"
-                   oninput="filterRows(this.value)" />
+        <div class="toolbar">
+            <input id="search" class="search" type="search" placeholder="Buscar por texto…" oninput="filterRows(this.value)" />
             @Html.ActionLink("➕ Agregar", "Create", null, new { @class = "btn btn-primary" })
-
             @using (Html.BeginForm("ResetUsadas", "Palabras", FormMethod.Post, new { @class = "d-inline" }))
             {
                 @Html.AntiForgeryToken()
@@ -125,46 +177,57 @@
         </div>
     }
 
-    <div class="table-responsive" style="max-height:64vh;">
-        <table class="table table-dark table-hover align-middle">
+    <div class="table-wrap">
+        <table class="table table-hover table-borderless align-middle">
             <thead>
                 <tr>
-                    <th style="width:32%;">@Html.DisplayNameFor(m => m.First().Texto)</th>
-                    <th style="width:32%;">@Html.DisplayNameFor(m => m.First().TextoNormalizado)</th>
-                    <th style="width:12%;">@Html.DisplayNameFor(m => m.First().TieneTilde)</th>
-                    <th style="width:12%;">@Html.DisplayNameFor(m => m.First().Usada)</th>
+                    <th style="width:32%;">Texto</th>
+                    <th style="width:32%;">Texto normalizado</th>
+                    <th style="width:12%;">¿Tiene tilde?</th>
+                    <th style="width:12%;">Estado</th>
                     <th style="width:12%;">Acciones</th>
                 </tr>
             </thead>
             <tbody id="rows">
-                @foreach (var item in Model)
+                @if (Model == null || !Model.Any())
                 {
                     <tr>
-                        <td class="texto">@item.Texto</td>
-                        <td>@item.TextoNormalizado</td>
-                        <td>
-                            @if (item.TieneTilde)
-                            {<span class="badge badge-ok">Sí</span> }
-                            else
-                            { <span class="badge badge-off">No</span>}
-                        </td>
-                        <td>
-                            @if (item.Usada)
-                            {<span class="badge badge-warn">Usada</span> }
-                            else
-                            { <span class="badge badge-ok">Disponible</span>}
-                        </td>
-                        <td class="actions">
-                            @Html.ActionLink("✏️", "Edit", new { id = item.PalabraID }, new { @class = "btn", title = "Editar" })
-                            @Html.ActionLink("🔍", "Details", new { id = item.PalabraID }, new { @class = "btn", title = "Detalles" })
-                            @Html.ActionLink("🗑️", "Delete", new { id = item.PalabraID }, new
-                            {
-                                @class = "btn",
-                                title = "Eliminar",
-                                onclick = "return confirm('¿Eliminar esta palabra?');"
-                            })
+                        <td colspan="5" class="empty">
+                            <i class="fa-regular fa-face-smile-beam"></i> Aún no hay palabras registradas.
                         </td>
                     </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="texto">@item.Texto</td>
+                            <td>@item.TextoNormalizado</td>
+                            <td>
+                                @if (item.TieneTilde)
+                                {<span class="badge badge-ok">Sí</span> }
+                                else
+                                { <span class="badge badge-off">No</span>}
+                            </td>
+                            <td>
+                                @if (item.Usada)
+                                {<span class="badge badge-warn">Usada</span> }
+                                else
+                                { <span class="badge badge-ok">Disponible</span>}
+                            </td>
+                            <td class="actions">
+                                @Html.ActionLink("✏️", "Edit", new { id = item.PalabraID }, new { @class = "btn", title = "Editar" })
+                                @Html.ActionLink("🔍", "Details", new { id = item.PalabraID }, new { @class = "btn", title = "Detalles" })
+                                @Html.ActionLink("🗑️", "Delete", new { id = item.PalabraID }, new
+                                {
+                                    @class = "btn",
+                                    title = "Eliminar",
+                                    onclick = "return confirm('¿Eliminar esta palabra?');"
+                                })
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
