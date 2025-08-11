@@ -23,7 +23,7 @@ namespace Ahorcado.Controllers
         public ActionResult Create(int? JugadorID, string Nivel = null)
         {
             ViewBag.JugadorID = new SelectList(db.Jugador, "Identificacion", "Nombre", JugadorID);
-            ViewBag.Nivel = new SelectList(new[] { "Facil", "Normal", "Dificil" }, Nivel);
+            ViewBag.Nivel = new SelectList(new[] { "Fácil", "Normal", "Difícil" }, Nivel);
             return View();
         }
 
@@ -31,7 +31,7 @@ namespace Ahorcado.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(int JugadorID, string Nivel)
         {
-            if (string.IsNullOrEmpty(Nivel) || !(new[] { "Facil", "Normal", "Dificil" }).Contains(Nivel))
+            if (string.IsNullOrEmpty(Nivel) || !(new[] { "Fácil", "Normal", "Difícil" }).Contains(Nivel))
             {
                 ModelState.AddModelError("Nivel", "Debe seleccionar un nivel válido.");
             }
@@ -43,7 +43,7 @@ namespace Ahorcado.Controllers
                 {
                     ModelState.AddModelError("", "No hay palabras disponibles en el diccionario.");
                     ViewBag.JugadorID = new SelectList(db.Jugador, "Identificacion", "Nombre", JugadorID);
-                    ViewBag.Nivel = new SelectList(new[] { "Facil", "Normal", "Dificil" }, Nivel);
+                    ViewBag.Nivel = new SelectList(new[] {"Fácil", "Normal", "Difícil" }, Nivel);
                     return View(new Partida { JugadorID = JugadorID, Nivel = Nivel });
                 }
 
@@ -65,7 +65,7 @@ namespace Ahorcado.Controllers
             }
 
             ViewBag.JugadorID = new SelectList(db.Jugador, "Identificacion", "Nombre", JugadorID);
-            ViewBag.Nivel = new SelectList(new[] { "Facil", "Normal", "Dificil" }, Nivel);
+            ViewBag.Nivel = new SelectList(new[] {"Fácil", "Normal", "Difícil" }, Nivel);
             return View(new Partida { JugadorID = JugadorID, Nivel = Nivel });
         }
 
@@ -132,12 +132,12 @@ namespace Ahorcado.Controllers
             j.Identificacion,
             j.Nombre,
             SUM(CASE 
-                WHEN p.Resultado = 'Ganada' AND p.Nivel = 'Facil' THEN 1
+                WHEN p.Resultado = 'Ganada' AND p.Nivel = 'Fácil' THEN 1
                 WHEN p.Resultado = 'Ganada' AND p.Nivel = 'Normal' THEN 2
-                WHEN p.Resultado = 'Ganada' AND p.Nivel = 'Dificil' THEN 3
-                WHEN p.Resultado = 'Perdida' AND p.Nivel = 'Facil' THEN -1
+                WHEN p.Resultado = 'Ganada' AND p.Nivel = 'Difícil' THEN 3
+                WHEN p.Resultado = 'Perdida' AND p.Nivel = 'Fácil' THEN -1
                 WHEN p.Resultado = 'Perdida' AND p.Nivel = 'Normal' THEN -2
-                WHEN p.Resultado = 'Perdida' AND p.Nivel = 'Dificil' THEN -3
+                WHEN p.Resultado = 'Perdida' AND p.Nivel = 'Difícil' THEN -3
                 ELSE 0 END) AS Marcador,
             COUNT(CASE WHEN p.Resultado = 'Ganada' THEN 1 END) AS Ganadas,
             COUNT(CASE WHEN p.Resultado = 'Perdida' THEN 1 END) AS Perdidas
