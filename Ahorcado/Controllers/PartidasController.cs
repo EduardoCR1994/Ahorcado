@@ -23,7 +23,14 @@ namespace Ahorcado.Controllers
         public ActionResult Create(int? JugadorID, string Nivel = null)
         {
             ViewBag.JugadorID = new SelectList(db.Jugador, "Identificacion", "Nombre", JugadorID);
-            ViewBag.Nivel = new SelectList(new[] { "Fácil", "Normal", "Difícil" }, Nivel);
+            ViewBag.Nivel = new SelectList(
+                new[] {
+            new { Value="Facil",   Text="Fácil"   },
+            new { Value="Normal",  Text="Normal"  },
+            new { Value="Dificil", Text="Difícil" }
+                },
+                "Value", "Text", Nivel
+            );
             return View();
         }
 
@@ -32,13 +39,21 @@ namespace Ahorcado.Controllers
         public ActionResult Create(int JugadorID, string Nivel)
         {
             var permitidos = new[] { "Facil", "Normal", "Dificil" };
-            if (string.IsNullOrWhiteSpace(Nivel) || !permitidos.Contains(Nivel))
+            // normaliza entrada común (quita tildes)
+            var mapa = new System.Collections.Generic.Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["Fácil"] = "Facil",
+                ["Facil"] = "Facil",
+                ["Normal"] = "Normal",
+                ["Difícil"] = "Dificil",
+                ["Dificil"] = "Dificil"
+            };
+            if (!mapa.ContainsKey(Nivel))
                 ModelState.AddModelError("Nivel", "Debe seleccionar un nivel válido.");
 
             if (!ModelState.IsValid)
             {
                 ViewBag.JugadorID = new SelectList(db.Jugador, "Identificacion", "Nombre", JugadorID);
-                // repoblar combo de nivel
                 ViewBag.Nivel = new SelectList(
                     new[] {
                 new { Value="Facil",   Text="Fácil"   },
@@ -49,24 +64,13 @@ namespace Ahorcado.Controllers
             }
 
             var palabra = db.Palabra.FirstOrDefault(p => !p.Usada);
-            if (palabra == null)
-            {
-                ModelState.AddModelError("", "No hay palabras disponibles en el diccionario.");
-                ViewBag.JugadorID = new SelectList(db.Jugador, "Identificacion", "Nombre", JugadorID);
-                ViewBag.Nivel = new SelectList(
-                    new[] {
-                new { Value="Facil",   Text="Fácil"   },
-                new { Value="Normal",  Text="Normal"  },
-                new { Value="Dificil", Text="Difícil" }
-                    }, "Value", "Text", Nivel);
-                return View(new Partida { JugadorID = JugadorID, Nivel = Nivel });
-            }
+            if (palabra == null) { /* ...tu manejo... */ }
 
             var partida = new Partida
             {
                 JugadorID = JugadorID,
                 PalabraID = palabra.PalabraID,
-                Nivel = Nivel,                 // <- sin tildes
+                Nivel = mapa[Nivel], // <-- siempre "Facil"/"Normal"/"Dificil"
                 FechaInicio = DateTime.Now,
                 Resultado = "Pendiente",
                 DuracionSegundos = 0
@@ -75,9 +79,9 @@ namespace Ahorcado.Controllers
             palabra.Usada = true;
             db.Partida.Add(partida);
             db.SaveChanges();
-
             return RedirectToAction("Play", new { id = partida.PartidaID });
         }
+
 
         // GET: Partidas/Play/{id}
         public ActionResult Play(int? id)
@@ -137,18 +141,19 @@ namespace Ahorcado.Controllers
         public ActionResult Escalafon()
         {
             var escalafon = db.Database.SqlQuery<EscalafonViewModel>(
-                @"SELECT 
+                @"
+        SELECT 
             j.Identificacion,
             j.Nombre,
             SUM(CASE 
-                WHEN p.Resultado = 'Ganada' AND p.Nivel = 'Fácil' THEN 1
-                WHEN p.Resultado = 'Ganada' AND p.Nivel = 'Normal' THEN 2
-                WHEN p.Resultado = 'Ganada' AND p.Nivel = 'Difícil' THEN 3
-                WHEN p.Resultado = 'Perdida' AND p.Nivel = 'Fácil' THEN -1
-                WHEN p.Resultado = 'Perdida' AND p.Nivel = 'Normal' THEN -2
-                WHEN p.Resultado = 'Perdida' AND p.Nivel = 'Difícil' THEN -3
+                WHEN p.Resultado = 'Ganada'  AND p.Nivel COLLATE Latin1_General_CI_AI = 'Facil'   THEN 1
+                WHEN p.Resultado = 'Ganada'  AND p.Nivel COLLATE Latin1_General_CI_AI = 'Normal'  THEN 2
+                WHEN p.Resultado = 'Ganada'  AND p.Nivel COLLATE Latin1_General_CI_AI = 'Dificil' THEN 3
+                WHEN p.Resultado = 'Perdida' AND p.Nivel COLLATE Latin1_General_CI_AI = 'Facil'   THEN -1
+                WHEN p.Resultado = 'Perdida' AND p.Nivel COLLATE Latin1_General_CI_AI = 'Normal'  THEN -2
+                WHEN p.Resultado = 'Perdida' AND p.Nivel COLLATE Latin1_General_CI_AI = 'Dificil' THEN -3
                 ELSE 0 END) AS Marcador,
-            COUNT(CASE WHEN p.Resultado = 'Ganada' THEN 1 END) AS Ganadas,
+            COUNT(CASE WHEN p.Resultado = 'Ganada'  THEN 1 END) AS Ganadas,
             COUNT(CASE WHEN p.Resultado = 'Perdida' THEN 1 END) AS Perdidas
         FROM Jugador j
         LEFT JOIN Partida p ON j.Identificacion = p.JugadorID
@@ -157,6 +162,7 @@ namespace Ahorcado.Controllers
 
             return View(escalafon);
         }
+
 
     }
 }
