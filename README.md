@@ -41,16 +41,6 @@ Este es un proyecto web desarrollado en **ASP.NET MVC 5** (Framework 4.8.1) que 
 
 ---
 
-## 🛠 Tecnologías Utilizadas
-
-- ASP.NET MVC 5 (.NET Framework 4.8.1)
-- C#
-- Entity Framework (Model First)
-- SQL Server (LocalDB o Azure opcional)
-- Bootstrap 5
-
----
-
 ## 📁 Estructura del Proyecto
 
 ```
@@ -75,6 +65,16 @@ Ahorcado/
 
 ---
 
+## 🛠 Especificaciones Técnicas
+
+- ASP.NET MVC 5 (.NET Framework 4.8.1)
+- Lenguaje C#
+- Entity Framework (Model First)
+- SQL Server (LocalDB o Azure opcional)
+- Bootstrap 5
+
+---
+
 ## 📦 Instrucciones de Ejecución
 
 ### ✅ Requisitos
@@ -83,7 +83,7 @@ Ahorcado/
 - SQL Server Express o LocalDB
 - .NET Framework 4.8.1
 
-### 🛠 Restaurar Base de Datos
+### 🛠 Restauración de la Base de Datos
 
 **Opción 1:** Ejecutar el script `AhorcadoDB.sql`
 
@@ -138,7 +138,7 @@ Ahorcado/
 
 ---
 
-## 🧬 Diagrama de Base de Datos (Mermaid)
+## 🧬 Diagrama de la Base de Datos (Mermaid)
 
 ```mermaid
 erDiagram
@@ -188,13 +188,98 @@ erDiagram
 
 ---
 
-## 🧾 Extras
+## 🧾 Información Adicional
 
 - `AhorcadoDB.sql`: script con la estructura y 100 palabras + jugadores precargados.
 - `.bak`: respaldo opcional de la base de datos.
 - Código comentado para facilitar mantenimiento.
 - Interfaz mejorada con Bootstrap 5.
 
+---
+
+## 📚 Recursos de Apoyo y Referencias
+
+### Repositorio del Proyecto  
+**Grupo 1 - Ahorcado**  
+* Link: https://github.com/EduardoCR1994/Ahorcado.git
+* [Enlace al repositorio GitHub](https://github.com/EduardoCR1994/Ahorcado.git)
+
+---
+
+## 🤖 Prompt del ChatBot de IA utilizada para la Solución: _Copilot_
+
+**Descripción:**  
+Durante el desarrollo se consultaron recursos complementarios para implementar correctamente la lógica, solucionar errores y mejorar el diseño.
+
+### 🟩 Prompt 1
+
+**Entrada:**  
+¿Puedes generar una clase Partida en C# para un juego de ahorcado? Debe incluir ID, jugador, palabra, nivel, duración, fecha de inicio y resultado.
+
+**Salida:**  
+Claro. La clase incluiría propiedades como PartidaID, JugadorID, PalabraID, Nivel, FechaInicio, DuracionSegundos y Resultado. Estas permiten registrar cada partida con su contexto y resultado final.
+
+---
+
+### 🟩 Prompt 2
+
+**Entrada:**  
+Crea un controlador MVC llamado PartidasController que permita iniciar una partida, seleccionar una palabra aleatoria no usada y registrar intentos.
+
+**Salida:**  
+Perfecto. El controlador tendría una acción para iniciar la partida, buscar una palabra no usada, asignarla al jugador y registrar los intentos conforme se envían. También incluiría redirección a la vista de juego.
+
+---
+
+### 🟩 Prompt 3
+
+**Entrada:**  
+Diseña una vista Razor para mostrar la palabra oculta como guiones bajos, los intentos restantes, y un teclado visual con botones de letras.
+
+**Salida:**  
+La vista mostraría la palabra con guiones bajos según las letras adivinadas, un contador de intentos restantes, y un teclado con botones de la A a la Z para seleccionar letras. Todo con diseño responsivo.
+
+---
+
+### 🟩 Prompt 4
+
+**Entrada:**  
+Genera una vista que muestre el ranking de jugadores con nombre, marcador, partidas ganadas y perdidas.
+
+**Salida:**  
+Se mostraría una tabla con columnas para identificación, nombre, marcador, ganadas y perdidas. El escalafón se ordenaría por marcador descendente para destacar el mejor rendimiento.
+
+---
+
+### 🟩 Prompt 5
+
+**Entrada:**  
+Sugiere mejoras visuales para la vista del juego del ahorcado usando Bootstrap 5. Incluye colores en hexadecimal para fondo, botones y texto.
+
+**Salida:**  
+Se recomienda usar un fondo claro (#f8f9fa), botones azules (#007bff) con texto blanco (#ffffff), y efectos hover más oscuros (#0056b3). La estructura debe ser centrada y responsiva para buena experiencia de usuario.
+
+---
+
+### 🟩 Prompt 6
+
+**Entrada:**  
+Dame una lista de 50 palabras en español: 25 con tildes y 25 sin tildes. Incluye una propiedad TieneTilde y una versión normalizada sin tilde.
+
+**Salida:**  
+Aquí tienes 50 palabras. Las primeras 25 incluyen tildes como “camión”, “teléfono”, “corazón”, y las siguientes 25 son sin tildes como “mesa”, “sol”, “puerta”. Cada palabra tiene su versión normalizada y una marca booleana indicando si tiene tilde.
+
+---
+
+### 🟩 Prompt 7
+
+**Entrada:**  
+Genera una lista de 10 jugadores con identificaciones numéricas y nombres completos realistas para pruebas en base de datos.
+
+**Salida:**  
+Aquí tienes 10 jugadores con nombres como “Jimena”, “Francisco”, “Mariana”, "Brandon", cada uno con un número de identificación único para simular registros reales en el sistema.
+
+---
 ---
 
 ## 📬 Contacto
