@@ -65,7 +65,7 @@ Ahorcado/
 
 ---
 
-## 🛠 Especificaciones Técnicas
+## 🛠️ Especificaciones Técnicas
 
 - ASP.NET MVC 5 (.NET Framework 4.8.1)
 - Lenguaje C#
@@ -83,7 +83,7 @@ Ahorcado/
 - SQL Server Express o LocalDB
 - .NET Framework 4.8.1
 
-### 🛠 Restauración de la Base de Datos
+### ⚙️ Restauración de la Base de Datos
 
 **Opción 1:** Ejecutar el script `AhorcadoDB.sql`
 
@@ -138,7 +138,7 @@ Ahorcado/
 
 ---
 
-## 🧬 Diagrama de la Base de Datos (Mermaid)
+## ✳️ Diagrama de la Base de Datos (Mermaid)
 
 ```mermaid
 erDiagram
