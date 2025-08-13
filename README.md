@@ -1,20 +1,34 @@
-# 🎮 Proyecto Final - Juego del Ahorcado
+# **🎮 Proyecto Final - Juego del Ahorcado**
 
-**Curso:** Programación Avanzada  
-**Código:** SC-601  
-**Profesor:** Luis Andrés Rojas Matey  
-**Grupo:** Eduardo Castro, Brandon Céspedes, Jimena Flores, Mariana Hidalgo
+## **Universidad Fidélitas**  
+**Curso:** SC-601 - Programación Avanzada 
+
+**Profesor:** Rojas Matey, Luis Andrés 
+**Estudiantes:** 
+- Castro Rojas, Eduardo Francisco
+- Céspedes Morales, Brandon Steven
+- Flores Carmona, Jimena
+- Hidalgo De La O, Mariana
+
+**Laboratorio:** M (6PM - 9PM) 
+**Grupo:** No. 9 
+**Cuatrimestre:** II - 2025  
+
+**Fecha de Entrega:** Miércoles 13 de agosto 2025, 6pm
 
 ---
+
 ## 👥 Integrantes del Grupo
 
 | Nombre            | Carné       | GitHub / Correo         |
 |-------------------|-------------|-------------------------|
 | Eduardo Castro    | FI13005258  | ecastro10015@ufide.ac.cr|
-| Brandon Céspedes  | FH22012992  | bcespedes@traarepuestos.com     |
+| Brandon Céspedes  | FH22012992  | bcespedes@traarepuestos.com |
 | Jimena Flores     | FH23014559  | jflores00335@ufide.ac.cr|
 | Mariana Hidalgo   | FH23015127  | lhidalgo70015@ufide.ac.cr|
+
 ---
+
 ## 🧠 Descripción
 
 Este es un proyecto web desarrollado en **ASP.NET MVC 5** (Framework 4.8.1) que simula el juego clásico del Ahorcado. Incluye:
@@ -182,7 +196,6 @@ erDiagram
 - Interfaz mejorada con Bootstrap 5.
 
 ---
-
 
 ## 📬 Contacto
 
