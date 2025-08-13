@@ -18,7 +18,7 @@
 
 ---
 
-## 👥 Integrantes del Grupo
+## 👥 Integrantes del Grupo 1
 
 | Nombre            | Carné       | GitHub / Correo         |
 |-------------------|-------------|-------------------------|
