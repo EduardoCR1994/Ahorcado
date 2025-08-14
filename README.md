@@ -280,6 +280,18 @@ Genera una lista de 10 jugadores con identificaciones numéricas y nombres compl
 Aquí tienes 10 jugadores con nombres como “Jimena”, “Francisco”, “Mariana”, "Brandon", cada uno con un número de identificación único para simular registros reales en el sistema.
 
 ---
+
+### 🟩 Prompt 8
+
+**Entrada:**  
+Explica cómo aplicar el CSS ya definido en la clase `.btn-nueva-partida` a un nuevo botón “Volver a jugar”, de manera que **herede todo el estilo original** (degradado, bordes redondeados, sombra, hover y transición) sin escribir CSS adicional.
+
+**Salida:**  
+Para reutilizar el CSS de `.btn-nueva-partida`, simplemente asigna esa clase al nuevo botón en tu HTML. Por ejemplo:  
+```html
+<a href="URL_DEL_JUEGO" class="btn btn-nueva-partida btn-lg px-4 py-2">
+    <i class="fas fa-redo"></i> Volver a jugar
+</a>
 ---
 
 ## 📬 Contacto
