@@ -292,9 +292,7 @@ Para reutilizar el CSS de `.btn-nueva-partida`, simplemente asigna esa clase al 
 <a href="URL_DEL_JUEGO" class="btn btn-nueva-partida btn-lg px-4 py-2">
     <i class="fas fa-redo"></i> Volver a jugar
 </a>
-
-
-
+```
 ---
 ## 📬 Contacto
 
