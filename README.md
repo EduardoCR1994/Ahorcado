@@ -16,7 +16,7 @@
 
 **Fecha de Entrega:** Miércoles 13 de agosto 2025, 6pm
 
----
+----
 
 ## 👥 Integrantes del Grupo 1
 
