@@ -293,7 +293,7 @@ Para reutilizar el CSS de `.btn-nueva-partida`, simplemente asigna esa clase al 
     <i class="fas fa-redo"></i> Volver a jugar
 </a>
 ---
-
+---
 ## 📬 Contacto
 
 Cualquier duda será resuelta en la exposición o mediante el Campus Virtual.
